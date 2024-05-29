@@ -1,4 +1,5 @@
 compile_flags.txt
+.clang-format
 *.root
 *.so
 *.pcm
