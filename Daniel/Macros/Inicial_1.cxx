@@ -50,7 +50,10 @@ g4Li10 -> Draw("l");
 g3Li10 -> SetLineColor(kRed);
 g4Li10 -> SetLineColor(kBlue);
 
-g4Li10->SetTitle("Cinematica para 11Li(p,t);#theta_{lab} [#circ];E_{lab}")  // Dado qeu se lo estoy dandoa a g4Li10,¿Funcionará?¿O es para g3Li10?
+g4Li10->SetTitle("Cinematica para 11Li(p,t);#theta_{lab} [#circ];E_{lab}");  // Dado qeu se lo estoy dandoa a g4Li10,¿Funcionará?¿O es para g3Li10?
+// No se como funciona el SetTitle para los ejes
+
+
 
 auto* legend10{new TLegend {0.7,0.7,0.95,0.95}}; // Me pregunto que saldra haciendolo asi
 legend10 -> AddEntry(g3Li10,"Particula ligera, tritio");
