@@ -8,32 +8,28 @@
 //      atributos. Los atributos pueden ser publicos o privados. 
 
 // Nuestra clase sera una reacción, por lo que primero tenemos que pensar que atributos queremos que tenga la reacción. Toda reacción esta formada por partículas, por
-//      lo  que lo primero es darle nombres y números atómicos/másicos a las partículas que colisionan. Otros datos de interés son 
+//      lo  que lo primero es darle nombres y números atómicos/másicos a las partículas que colisionan. 
 
 
 class Particula {
-    char nombre;
     double Z;
     double M;
 
     public:
-        void definir_nombre(char name);
-        void definir_M(double valor);
-        void definir_Z(double valor);
+        void definir_MZ(double valor);
         double get_M(){return M}
 };
 
-void Particula::definir_M (double valor) {
-    M = valor;
+void Particula::definir_MZ (double M, double Z) {
+    M = M;
+    Z = Z
 };
 
 void Particula::definir_Z (double valor) {
     Z = valor;
 };
 
-void Particula::definir_nombre (char name) {
-    nombre = name;
-};
+// Una colisión esta caracterizada por la energía del atomo incidente y las partículas que la componen
 
 
 class Colision {
@@ -45,7 +41,6 @@ class Colision {
 
 public: 
     void energia(double valor);
-    void angulo(double valor);
     void introducir_particulas(Particula p1, Particula p2, Particula p3, Particula p4);
     double get_m1(){return p1.get_M() };
     double get_m2(){return p2.get_M() };
@@ -64,4 +59,4 @@ void Colision::introducir_particulas (Particula p1, Particula p2, Particula p3, 
 
 void Colision::energia (double valor){
     tbeam = valor
-};
+}
