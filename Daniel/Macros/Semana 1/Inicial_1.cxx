@@ -44,8 +44,8 @@ auto* g4Li12{Li12 -> GetKinematicLine4()};
 
 auto* canvas10{new TCanvas {"Li10","Li10"}};
 
-g3Li10 -> Draw("al");
-g4Li10 -> Draw("l");
+g3Li10 -> Draw("l");
+g4Li10 -> Draw("al");
 
 g3Li10 -> SetLineColor(kRed);
 g4Li10 -> SetLineColor(kBlue);
@@ -69,8 +69,8 @@ legend10 -> Draw();
 
 auto* canvas11{new TCanvas {"Li11","Li11"}};
 
-g3Li11 -> Draw("al");
-g4Li11 -> Draw("l");
+g3Li11 -> Draw("l");
+g4Li11 -> Draw("al");
 
 g3Li11 -> SetLineColor(kRed);
 g4Li11 -> SetLineColor(kBlue);
@@ -83,8 +83,8 @@ legend11 -> Draw();
 
 auto* canvas12{new TCanvas {"Li12","Li12"}};
 
-g3Li12 -> Draw("al"); 
-g4Li12 -> Draw("l");
+g3Li12 -> Draw("l"); 
+g4Li12 -> Draw("al");
 
 g3Li12 -> SetLineColor(kRed);
 g4Li12 -> SetLineColor(kBlue);
