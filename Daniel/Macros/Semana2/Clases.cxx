@@ -16,18 +16,15 @@ class Particula {
     double M;
 
     public:
-        void definir_MZ(double valor);
-        double get_M(){return M}
+        void definir_MZ(double valorM, double valorZ);
+        double get_M(){return M;};
 };
 
 void Particula::definir_MZ (double M, double Z) {
     M = M;
-    Z = Z
+    Z = Z;
 };
 
-void Particula::definir_Z (double valor) {
-    Z = valor;
-};
 
 // Una colisión esta caracterizada por la energía del atomo incidente y las partículas que la componen
 
@@ -42,11 +39,11 @@ class Colision {
 public: 
     void energia(double valor);
     void introducir_particulas(Particula p1, Particula p2, Particula p3, Particula p4);
-    double get_m1(){return p1.get_M() };
-    double get_m2(){return p2.get_M() };
-    double get_m3(){return p3.get_M() };
-    double get_m4(){return p4.get_M() };
-    double get_tbeam(){return tbeam};
+    double get_m1(){return p1.get_M(); };
+    double get_m2(){return p2.get_M(); };
+    double get_m3(){return p3.get_M(); };
+    double get_m4(){return p4.get_M(); };
+    double get_tbeam(){return tbeam;};
 };
 
 
@@ -58,5 +55,5 @@ void Colision::introducir_particulas (Particula p1, Particula p2, Particula p3, 
 };
 
 void Colision::energia (double valor){
-    tbeam = valor
+    tbeam = valor;
 }
