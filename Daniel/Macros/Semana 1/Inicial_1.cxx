@@ -19,11 +19,11 @@ void Inicial_1()
 //   Denotamos con nombres sencillos a  las reacciones. Lo que estamos haciendo es decir que la variable Li10, Li11 y Li12 es el return de la clase
 //   Kinematics para los valores dados (de esto ultimo no estoy seguro, lo que es  seguro es que Kinematics es una clase). 
 
-auto* Li10{new ActPhysics::Kinematics("11Li","d","t","10Li",14*7.5)};
+auto* Li10{new ActPhysics::Kinematics("11Li","d","t","10Li",12*7.5)};
 
-auto* Li11{new ActPhysics::Kinematics("11Li","d","d","11Li",14*7.5)};
+auto* Li11{new ActPhysics::Kinematics("11Li","d","d","11Li",12*7.5)};
 
-auto* Li12{new ActPhysics::Kinematics("11Li","d","p","12Li",14*7.5)};
+auto* Li12{new ActPhysics::Kinematics("11Li","d","p","12Li",12*7.5)};
 
 // Ahora queremos representar la colisión (tanto de la particula pesada como la ligera), cada una en una gráfica diferente (si no?)
 

@@ -53,11 +53,11 @@ double theta4cm(Colision colision, double theta4cm){
 // Función principal
 
 void Cinematica(){
-    // Definimos las partiulcas
-    Particula li11{};
-    Particula li12{};
-    Particula d{};
-    Particula p{};
+    // Definimos las partículas
+    Particula li11;
+    Particula li12;
+    Particula d;
+    Particula p;
     
     // Detallamos las partículas
     li11.definir_MZ(11,3);
@@ -68,15 +68,29 @@ void Cinematica(){
     // Definimos la colisión y la detallamos
     Colision colision{};
     colision.introducir_particulas(li11,d,p,li12);
-    colision.energia(7.5*12);
+    colision.energia(7.5*12*);
 
     //
+
+    
+auto* Li10{new ActPhysics::Kinematics("11Li","d","t","10Li",12*7.5)};
+auto* g3Li10{Li10 -> GetKinematicLine3()};
+auto* g4Li10{Li10 -> GetKinematicLine4()};
+
+auto* canvas10{new TCanvas {"Li10","Li10"}};
+auto* T4 {new TGraph}; // sen argumentos
+
+g3Li10 -> Draw("al");
+g4Li10 -> Draw("l");
+
 for (int i=0;i<100000;i++){
-    auto vgauss{gRandom->Gaus(0.5,3)}; 
-    auto vuniform{gRandom->Uniform(-1,1)};
-    gauss->Fill(vgauss);
-    uniforme->Fill(vuniform);
+    auto theta4p{gRandom->Uniform(-TMath::Pi(),TMath::Pi())};
+
+
+    gother->SetPoint(gother->GetN(), theta4p, t4(colision,theta4p));
+
 }
 
+gother->Draw("pl")
 
 };
