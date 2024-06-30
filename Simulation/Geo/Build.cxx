@@ -33,7 +33,7 @@ void Build(bool draw = true)
     geo.Construct();
     geo.Print();
 
-    // SAVE GEO
+    // Save geometry named simple in this directory
     geo.WriteGeometry("./", "simple");
 
     // and draw it if necessary
