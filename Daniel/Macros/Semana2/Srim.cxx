@@ -69,7 +69,7 @@ double Distancia_maxima_45{srim.EvalDirect("Litio_11",Tinicial)};
 
 // Ahora vamos a aplicar el SLOW para obtener la energía perdida en una distancia. Para esto vamos a usar un for:
 
-double step{Distancia_maxima/100};
+double step{Distancia_maxima/10000};
 std::cout << "Distancia maxima: " << Distancia_maxima << " step : " << step << '\n';
 auto* gother1 {new TGraph};
 auto* gother1_15 {new TGraph};
@@ -80,7 +80,7 @@ auto* gother2_45 {new TGraph};
 
 for(double x=0;x<Distancia_maxima;x += step){
     
-    double Tnew{srim.Slow("Hidrogeno_2", Tit, x, 0*TMath::DegToRad())};
+    double Tnew{srim.Slow("Hidrogeno_2", Tit, step, 0*TMath::DegToRad())};
     std::cout << "Tit: " << Tit << " Tnew : " << Tnew << '\n';
     std::cout << "x = " << x << "\n";
     double diff{Tit-Tnew};
@@ -91,7 +91,7 @@ for(double x=0;x<Distancia_maxima;x += step){
 
 for(double x=0;x<Distancia_maxima_15;x += step){
 
-    double Tnew_15{srim.Slow("Hidrogeno_2", Tit_15, x, 15*TMath::DegToRad())};
+    double Tnew_15{srim.Slow("Hidrogeno_2", Tit_15, step, 15*TMath::DegToRad())};
     double diff_15{Tit_15-Tnew_15};
     gother1_15->SetPoint(gother1_15->GetN(), x, diff_15);
     gother2_15->SetPoint(gother2_15->GetN(), Tit_15, diff_15);
@@ -99,7 +99,7 @@ for(double x=0;x<Distancia_maxima_15;x += step){
 
 }
 for(double x=0;x<Distancia_maxima_45;x += step){
-    double Tnew_45{srim.Slow("Hidrogeno_2", Tit_45, x, 45*TMath::DegToRad())};
+    double Tnew_45{srim.Slow("Hidrogeno_2", Tit_45, step, 45*TMath::DegToRad())};
     double diff_45{Tit_45-Tnew_45};
     gother1_45->SetPoint(gother1_45->GetN(), x, diff_45);
     gother2_45->SetPoint(gother2_45->GetN(), Tit_45, diff_45);
