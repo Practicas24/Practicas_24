@@ -25,6 +25,7 @@ void srim()
     // O que che pido que fagas é :
     auto* gl {new TGraph};
     gl->SetTitle("Eloss vs distance;dist [mm];dE/dx [MeV]");
+    gl->SetMarkerStyle(6);
     auto* gt {new TGraph};
     gt->SetTitle("Eloss vs energy;T [MeV];dE/dx [MeV]");
 
@@ -34,15 +35,21 @@ void srim()
 
     // Rango inicial
     double Rini {srim.EvalDirect("beam", Tini)}; // escolle a partícula (táboa) que queiras
-    double rstep {1};                            // Definimos un step de 1 mm
+    double rstep {0.1};                            // Definimos un step de 1 mm
 
     for(double r = 0; r < Rini; r += rstep)
     {
         // 1-> Aplicas a función slow no step con Tit
+        auto Taux {srim.Slow("beam", Tit, rstep)};
         // 2-> Calcuals a diff do resultado respeito a Tit
+        auto diff {Tit - Taux};
         // 3-> Enches os gráficos
+        gl->SetPoint(gl->GetN(), r, diff);
         // 4-> Actualizas Tit co valor slowed
+        Tit = Taux;
     }
+    srim.Draw("inverse");
 
     // Representas graficamente nun TCanvas con dous pads
+    // gl->Draw("alp");
 }
