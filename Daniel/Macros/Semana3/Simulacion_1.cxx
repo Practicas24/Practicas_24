@@ -47,7 +47,7 @@ li10.definir_AZ(10, 3,10.035483);
 d.definir_AZ(2, 1,2.01410177784);
 t.definir_AZ(3, 1,3.01604928132);
 
-double interacciones{50000}; // Definimos el número de interaccioens para el for posterior
+double interacciones{10000}; // Definimos el número de interaccioens para el for posterior
 
 
 for (int i=0; i<interacciones; i++){
@@ -56,9 +56,10 @@ for (int i=0; i<interacciones; i++){
     auto z_gauss{gRandom->Gaus(0,5)};
 
     auto r{TMath::Sqrt(TMath::Power(y_gauss,2)+TMath::Power(z_gauss,2))};
-
-    auto theta{TMath::ATan(r/x_uniform)*TMath::RadToDeg()};
-    auto phi{TMath::ATan(y_gauss/z_gauss)*TMath::RadToDeg()};
+    auto uniforme_1{gRandom->Uniform(-1,1)};
+    auto uniforme_2{gRandom->Uniform(-1,1)};
+    auto theta{TMath::ACos(uniforme_1)};
+    auto phi{TMath::ACos(uniforme_2)};
     
     histo_xy->Fill(x_uniform,y_gauss);
     histo_zy->Fill(z_gauss,y_gauss);
