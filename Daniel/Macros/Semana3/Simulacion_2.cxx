@@ -49,13 +49,17 @@ geo->ReadGeometry("Geometria/", "simple");
 
 Particula li11;
 Particula li10;
-Particula d;
+Particula li12;
 Particula t;
+Particula d;
+Particula p;
 
+li12.definir_AZ(12, 3,12);
 li11.definir_AZ(11, 3,11.0437236);
 li10.definir_AZ(10, 3,10.035483);
 d.definir_AZ(2, 1,2.01410177784);
 t.definir_AZ(3, 1,3.01604928132);
+p.definir_AZ(1, 1, 1);
 
 // Tamaños de la caja
 double xACTAR{256}; // Esta en mm
@@ -70,15 +74,15 @@ double zSil{1.5}; // Esta en mm
 double Tbeam{11*7.5};
 
 // Definimos las variables histogramas. La primera -> energía de entrada al detector; La segunda -> energía perdida en el detector
-auto* histo_T {new TH2D {"T_theta","Histo 2D;#theta_{4};T;Contas",150,0,2*TMath::Pi()/16,250,0,100}};
-auto* histo_DT {new TH2D {"DT_theta","Histo 2D;#theta_{4};#Delta T;Contas",150,0,TMath::Pi()/8,250,0,100}};
+auto* histo_T {new TH2D {"T_{4}","Histo 2D;theta_{4};T;Contas",150,0,2*TMath::Pi()/16,20,0,100}};
+auto* histo_DT {new TH2D {"#Delta T_{4} ","Histo 2D;theta_{4};#Delta T;Contas",150,0,TMath::Pi()/8,25,0,100}};
 
 // Definimos la normal
 
 ROOT::Math::XYZVector normal{1, 0, 0};
 
 
-for(int i=0; i<1000000; i+=1){
+for(int i=0; i<10000; i+=1){
     
 
     auto x_uniform{gRandom->Uniform(-xACTAR/2,xACTAR/2)};
@@ -108,7 +112,7 @@ for(int i=0; i<1000000; i+=1){
     ROOT::Math::XYZPoint vertice {x_uniform , y_gauss, z_gauss};
 
     // 2-> Creamos los angulos 
-    ROOT::Math::XYZVector direccion {TMath::Cos(theta4_lab), TMath::Sin(theta4_lab)*TMath::Sin(phi), TMath::Sin(theta4_lab)*TMath::Sin(phi)};
+    ROOT::Math::XYZVector direccion{TMath::Cos(theta4_lab), TMath::Sin(theta4_lab)*TMath::Sin(phi), TMath::Sin(theta4_lab)*TMath::Sin(phi)};
 
     bool SilLado{}; // No se que es esto (??)
     double SilDist{}; // Distancia desde el vertice hasta el punto de impacto
@@ -121,17 +125,18 @@ for(int i=0; i<1000000; i+=1){
 
     SilDist*=10; // Convertimos la distancai de mm a cm
     if(SilIndice != -1){
-
+        //std::cout <<T4<<"\n";
         double thetaSi{TMath::ACos(direccion.Dot(normal))};
 
         double T4in{srim.Slow("heavy", T4, SilDist, 0*TMath::DegToRad())}; 
 
+        if(T4==0.0){
+        std::cout <<theta4_lab*TMath::RadToDeg()<<"\n";
+        }
         double T4out{srim.Slow("heavySil", T4in, zSil, thetaSi*TMath::DegToRad())}; 
         
         histo_T->Fill(thetaSi,T4in);
         histo_DT->Fill(thetaSi,T4in-T4out);
-
-
     }
     
     }
@@ -143,5 +148,5 @@ auto*  canvas_DT {new TCanvas{"canvas_DT", "DT4_vs_theta"}};
 histo_DT->Draw("kcool");
 // Dudas: ¿Debo usar hidrogeno_2?¿Debo usar EvalInverse para calcular T4new?¿Los angulso theta4 y phi4 son aleatorios?
 // Dudas: No entiendo exactamente el punto 6. ¿Qué es perder la energía de los silicios?
-
+// Problema: Se va la energía a cero ¿Es normal?
 }

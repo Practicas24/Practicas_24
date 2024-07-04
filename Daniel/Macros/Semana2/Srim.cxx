@@ -80,7 +80,7 @@ auto* gother2_45 {new TGraph};
 
 for(double x=0;x<Distancia_maxima;x += step){
     
-    double Tnew{srim.Slow("Hidrogeno_2", Tinicial, x, 0*TMath::DegToRad())};
+    double Tnew{srim.Slow("Litio_11", Tinicial, x, 0*TMath::DegToRad())};
     //double Tnew{srim.Slow("Hidrogeno_2", Tit, step, 0*TMath::DegToRad())};
     std::cout << "Tit: " << Tit << " Tnew : " << Tnew << '\n';
     std::cout << "x = " << x << "\n";
@@ -92,7 +92,7 @@ for(double x=0;x<Distancia_maxima;x += step){
 
 for(double x=0;x<Distancia_maxima_15;x += step){
 
-    double Tnew_15{srim.Slow("Hidrogeno_2", Tinicial, x, 15*TMath::DegToRad())};
+    double Tnew_15{srim.Slow("Litio_11", Tinicial, x, 15*TMath::DegToRad())};
     //double Tnew_15{srim.Slow("Hidrogeno_2", Tit_15, step, 15*TMath::DegToRad())};
     double diff_15{Tit_15-Tnew_15};
     gother1_15->SetPoint(gother1_15->GetN(), x, diff_15);
@@ -101,7 +101,7 @@ for(double x=0;x<Distancia_maxima_15;x += step){
 
 }
 for(double x=0;x<Distancia_maxima_45;x += step){
-    double Tnew_45{srim.Slow("Hidrogeno_2", Tinicial, x, 45*TMath::DegToRad())};
+    double Tnew_45{srim.Slow("Litio_11", Tinicial, x, 45*TMath::DegToRad())};
     //double Tnew_45{srim.Slow("Hidrogeno_2", Tit_45, step, 45*TMath::DegToRad())};
     double diff_45{Tit_45-Tnew_45};
     gother1_45->SetPoint(gother1_45->GetN(), x, diff_45);
