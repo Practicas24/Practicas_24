@@ -28,7 +28,7 @@ ActSim::SilAssembly l0Assembly {0, silUnit, true, false};
 
 // Definimos la distancia entre el detector de silicio y el pad plane (no se que es exactamente)
 
-double distancia {10.4}; // cm
+double distancia {10}; // cm
 l0Assembly.SetOffsets(distancia);
 l0Assembly.SetAssemblyPlacements(l0Placements);
 
