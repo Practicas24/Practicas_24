@@ -1,4 +1,5 @@
 #include "ActGeometry.h"
+#include "TString.h"
 
 #include <map>
 #include <string>
@@ -24,11 +25,14 @@ ActSim::SilUnit silUnit {0, SiX, SiY, SiZ}; // el cero significa que solo hay un
 // Definimos el punto de partida (creo?)
 
 std::map<int, std::pair<double, double>> l0Placements {{0, {0, 0}}};
-ActSim::SilAssembly l0Assembly {0, silUnit, true, false};
 
 // Definimos la distancia entre el detector de silicio y el pad plane (no se que es exactamente)
 
-double distancia {10}; // cm
+
+for(double i=0.0; i<15.5;i+=2){
+
+double distancia {3+i}; // cm
+ActSim::SilAssembly l0Assembly {0, silUnit, true, false};
 l0Assembly.SetOffsets(distancia);
 l0Assembly.SetAssemblyPlacements(l0Placements);
 
@@ -42,13 +46,14 @@ geo.Print();
 
 // Guardamos la geometría en un archivo root que necesitaremos leer con el macro Simulacion_2.cxx (muy importante)
 
-geo.WriteGeometry("./", "simple");
+geo.WriteGeometry("./", TString::Format("simple%.0f", i+3).Data());
 
 // Dibujamos
-if(draw) 
-    geo.Draw();
+// if(draw) 
+// geo.Draw();
 
 
 // Este archivo solo se ejecuta una vez (a no ser que haga cambios en la geometría), ya que el archivo root (simple.root) se crea una vez y ya se lee para siempre
 
+}
 }
