@@ -1,3 +1,4 @@
+
 #include "TFile.h"
 #include "TH1.h"
 #include "TCanvas.h"
@@ -8,6 +9,7 @@
 #include "TLegend.h"
 
 #include <vector>
+
 
 TGraphErrors *principal(std::string name, double distancia)
 {
@@ -46,30 +48,4 @@ void fit()
 
         gother_vector.push_back(principal(name, distancia));
     }
-
-
-    auto* legend{new TLegend {0.7,0.7,0.95,0.95}};  
-
-    auto* mg {new TMultiGraph};
-    mg->SetTitle(";E [MeV];#sigma [#circ]");
-    //Format
-    std::vector<int> ms {};
-    std::vector<double> dists {3,5,7,9,11,13,15,17};
-    std::vector<double> mk_style {20,21,22,23,33,34,45,47};
-    int i{0};
-    for(auto* g : gother_vector)
-    {   
-        
-        g->SetMarkerStyle(mk_style[i]);
-        g->SetMarkerSize(1.3);
-        mg->Add(g);
-        legend -> AddEntry(g,TString::Format("%.0f cm",dists[i]));
-        i+=1;
-    }
-    
-    gStyle->SetPalette(kCool);
-    auto *c1{new TCanvas("c1", "sigma_projections")};
-    mg->Draw("apl plc pmc");
-    legend -> Draw();
-
 }

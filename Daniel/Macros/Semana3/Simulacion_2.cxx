@@ -8,6 +8,7 @@
 #include "Rtypes.h"
 #include "TStyle.h"
 #include "TFile.h"
+#include "TEfficiency.h"
 
 #include "TCanvas.h"
 #include "TGraph.h"
@@ -94,7 +95,7 @@ void GetCanvas(TCanvas *c, const std::vector<TH1D *> &px)
 
 // MAIN
 
-void principal(std::string name, double distancia)
+TCanvas* principal(std::string name, double distancia)
 {
 
     ActPhysics::SRIM srim; // &srim -> asi se ''hace'' un pointer
@@ -146,12 +147,14 @@ void principal(std::string name, double distancia)
     double Tbeam{11 * 7.5};
 
     // Definimos las variables histogramas. La primera -> energía de entrada al detector; La segunda -> energía perdida en el detector
-    auto *histo_T{new TH2D{"histo_T", "T_{4} vs #theta;#theta_{4};T;Contas", 220, 0, 60, 220, 0, 100}};
-    auto *histo_DT{new TH2D{"histo_DT", "#Delta T_{4} vs #theta;#theta_{4};#Delta T;Contas", 150, 0, 60, 220, 0, 100}};
+    auto *histo_T{new TH2D{"histo_T", "T_{4} vs #theta Pre Sil;#theta_{4};T;Contas", 220, 0, 60, 220, 0, 100}};
+    auto *histo_DT{new TH2D{"histo_DT", "#Delta T_{4} vs #theta Post Sil;#theta_{4};#Delta T;Contas", 150, 0, 60, 220, 0, 100}};
     auto *hSilDist{new TH1D{"hSilDist", "SilDist Histograma ;SilDist [mm]", 150, 0, 500}};
     auto *hT1{new TH1D{"hT1", "T1 vertice; T_{1} [MeV]", 70, 70, 90}};
     auto *hT4c{new TH2D{"hT4c", "T_{4} vertice vs #theta;#theta_{4};T_{4};Contas", 200, 0, 30, 250, 0, 100}};
     auto *hkintheo{new TH2D{"hkintheo", "T_{4} sampled theo kin;#theta_{4};T_{4};Contas", 150, 0, 30, 220, 0, 100}};
+    auto *hThetaCMAll{new TH1D{"hThetaCMAll", "#theta_{CM}", 220, 0, 180}};
+    auto *hThetaCM{new TH1D{"hkinthThetaCMheo", "#theta_{CM}", 220, 0, 180}};
     // Definimos la normal
     ROOT::Math::XYZVector normal{1, 0, 0};
 
@@ -185,6 +188,7 @@ void principal(std::string name, double distancia)
 
         auto [T4, theta4_labold]{valores4(li11, d, t, li10, T1new, theta4_cm)};
         double theta4_lab{ApplyAngular(theta4_labold, 1)};
+        hThetaCMAll->Fill(theta4_cm * TMath::RadToDeg());
 
         hkintheo->Fill(theta4_lab * TMath::RadToDeg(), T4);
 
@@ -205,7 +209,8 @@ void principal(std::string name, double distancia)
 
         SilDist *= 10; // Convertimos la distancai de cm a mm
         if (SilIndice != -1)
-        {
+        {   
+            hThetaCM->Fill(theta4_cm * TMath::RadToDeg());
             hSilDist->Fill(SilDist);
             // std::cout <<T4<<"\n";
             double thetaSi{TMath::ACos(direccion.Dot(normal))};
@@ -222,7 +227,7 @@ void principal(std::string name, double distancia)
             double dT{ApplyResolution(T4in1 - T4out)};
             histo_DT->Fill(thetaSi * TMath::RadToDeg(), dT);
             double T4vertix{srim.EvalInitialEnergy("heavy", dT, SilDist)};
-            hT4c->Fill(thetaSi * TMath::RadToDeg(), T4vertix);
+            hT4c->Fill(theta4_lab * TMath::RadToDeg(), T4vertix);
         }
     }
 
@@ -234,23 +239,31 @@ void principal(std::string name, double distancia)
 
     gStyle->SetPalette(kCool);
     auto *c0{new TCanvas{"c0", "T4_vs_theta"}};
-    c0->DivideSquare(6);
+    c0->DivideSquare(4);
+    //c0->cd(1);
+    //histo_T->Draw("colz");
+    //c0->cd(1); 
+    //histo_DT->Draw("colz");
+    //c0->cd(3);
+    //hT1->Draw("colz");
+    //c0->cd(4);
+    //hSilDist->Draw();
     c0->cd(1);
-    histo_T->Draw("colz");
-    c0->cd(2);
-    histo_DT->Draw("colz");
-    c0->cd(3);
-    hT1->Draw("colz");
-    c0->cd(4);
-    hSilDist->Draw();
-    c0->cd(5);
     g4Li10->SetLineColor(kOrange);
     g4Li10->SetLineWidth(4);
     hT4c->Draw("colz");
     g4Li10->Draw("l");
-    c0->cd(6);
+    gPad->SaveAs(TString::Format("./Eps_figure/%.f_measured_kin.eps", distancia));
+    c0->cd(2);
     hkintheo->Draw("colz");
     g4Li10->Draw("l");
+    gPad->SaveAs(TString::Format("./Eps_figure/%.f_simulation_kin.eps", distancia));
+    c0->cd(3);
+    hThetaCM->Draw();
+    c0->cd(4);
+    hThetaCMAll->Draw();
+
+
     // Problema: Se va la energía a cero ¿Es normal?
 
     // Facer proxeccions
@@ -261,23 +274,27 @@ void principal(std::string name, double distancia)
     int idx{};
     for (double t = Tmin; t <= Tmax; t += step)
     {
-        auto *p{GetProjection(hT4c, t, t + step, TString::Format("p%d_%.0f", idx,distancia))};
+        auto *p{GetProjection(hT4c, t, t + step, TString::Format("p%d", idx))};
         ps.push_back(p);
         idx++;
     }
+    // Eficiencia
+    auto *eff{new TEfficiency{*hThetaCM, *hThetaCMAll}};
 
-    auto *c1{new TCanvas{"c1", "histogramas"}};
-    GetCanvas(c1, ps);
-
-    // Save in file
     auto *fout{new TFile{TString::Format("ps_%s.root", name.c_str()), "recreate"}};
     for (auto *p : ps)
         p->Write();
+    eff->Write("eff");
     fout->Close();
+    std::cout << "--------------------------------------------------------" << '\n';
+    std::cout << "Hemos acabado con la distancia " << distancia << " [cm]" << '\n';
+    std::cout << "--------------------------------------------------------" << '\n';
+
+    return c0;
 }
 
 void Simulacion_2()
-{
+{   std::vector<TCanvas*> c_vector;
 
     for (double i = 0.0; i < 15.5; i += 2)
     {
@@ -287,4 +304,12 @@ void Simulacion_2()
 
         principal(name, distancia);
     }
+
+    double distancia{50.0}; // cm
+    std::string name{TString::Format("simple%.0f", 50.0).Data()};
+
+    c_vector.push_back(principal(name, distancia));
+
+    
+
 }

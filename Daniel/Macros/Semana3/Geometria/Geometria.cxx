@@ -56,4 +56,22 @@ geo.WriteGeometry("./", TString::Format("simple%.0f", i+3).Data());
 // Este archivo solo se ejecuta una vez (a no ser que haga cambios en la geometría), ya que el archivo root (simple.root) se crea una vez y ya se lee para siempre
 
 }
+
+double distancia {50}; // cm
+ActSim::SilAssembly l0Assembly {0, silUnit, true, false};
+l0Assembly.SetOffsets(distancia);
+l0Assembly.SetAssemblyPlacements(l0Placements);
+
+// Creamos finalmente la variable 
+
+ActSim::Geometry geo {};
+geo.SetDrift(actar);
+geo.AddAssemblyData(l0Assembly);
+geo.Construct();
+geo.Print();
+
+// Guardamos la geometría en un archivo root que necesitaremos leer con el macro Simulacion_2.cxx (muy importante)
+
+geo.WriteGeometry("./", TString::Format("simple%.0f", 50.0).Data());
+
 }
