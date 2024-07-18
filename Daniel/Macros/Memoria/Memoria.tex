@@ -7,7 +7,9 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{tikz}
 \usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref} % Crea las hiperreferencias
 \graphicspath{ {Imagenes/} }
 
@@ -60,6 +62,91 @@
 
 \newpage
 
+\section{Información de las prácticas}
+
+\section{Memoria de Actividades}
+
+\subsection{Objetivos}
+
+El objetivo principal de estas prácticas es reproducir la respuesta real del detector ACTAR TPC para una reacción nuclear usando el lenguaje de programación C++ y apoyándose en la herramienta ROOT diseñada por el CERN. La reacción nuclear estudiada es la siguiente:
+
+\begin{equation}
+    ^{11}\mathrm{Li}+^2\mathrm{H} \rightarrow ^3\mathrm{H}+^{10}\mathrm{Li} \Longleftrightarrow 1 + 2 \rightarrow 3 + 4
+\end{equation}
+El motivo por el cual esta reacción es de interes para la física nuclear moderna es que nos permitirá comprender mejor la estrucutura atómica del litio 10, un isótopo muy inestable. Conocer con rigor la estructura para isótopos inestables es fundamental en la fisica nuclear, ya que nos permitirá crear mejores modelos para las ``posiciones'' cuánticas de los protones y neutrones dentro del núcleo. \\ 
+
+La estructura atómica podrá hallarse en función del ángulo de salida de las partículas pesadas. Consecuentemente es de vital importancia no solo tener los mejores detectores, si no poder predecir cuales cual es la mejor estrucutra para el detector (tamaño, grosor de los detectores de silicio...), de tal manera que podamos hallar la energía y ángulo de las partículas resultantes de la colisión con la mayor precisión y eficiencia posible.
+
+
+\subsection{Trabajo Realizado}
+
+\subsubsection{Cálculo de la cinemática}
+
+La primera tarea realizada fue calcular la cinemática de las partículas. Una buena aproximación de la colisión se puede hacer suponiendo una colisión elástica dentro de la relatividad especial, ya que debido a las altas energías y la baja masa de las partículas, usar la relatividad especial se hace obligatorio. Una mejor sería suponer que existe una energía perdida debido a la excitación de protones/neutrones en el núcleo de los átomos.  \\
+
+Resolver la cinemática de la colsión consiste en calcular las energías de las diferentes partículas . El sistema de referencia de más interés es el nuestro, que llamamos laboratorio (figura \ref{Fig:2.2.01-Lab}), y es aquel en el que la partícula del litio 11 incide con una energía $T_{beam}$ sobre la partícula de deuterio que suponemos quieta. El otro sistema de referencia de interés es el sistema centro de masas (figura \ref{Fig:2.2.01-CM}). \\
+
+Tras un cálculo podimos obtener la energía cinética de las partículas y su ángulo de salida (respecto el eje de incidencia) en el sistema laboratorio a partir de dos parámetros: el ángulo de salida de la partícula en el sistema de centro de masas, y de $T_{beam}$. Dado que este último es un valor conocido, podríamos obtener $\theta_4$ y $\theta_3$ a partir de $T_3$ y $T_4$.   \\
+
+
+
+
+
+\begin{figure}[h!] \centering
+\begin{subfigure}[b]{0.45\linewidth} 
+    \begin{tikzpicture}[thick,scale=0.6] \centering
+    \node (1) at (-3,0) {};
+    \node (2) at (0,0) {$m_2$};
+    \node (3) at (3,1) {$m_3$};
+    \node (4) at (3,-1) {$m_4$};
+    \node (m1) at (-1.5,0.5) {$m_1$};
+    \draw[arrows={->},ultra thick] (1.east)--(2.west);
+    \draw[arrows={->},ultra thick] (2.east)--(3.west);
+    \draw[arrows={->},ultra thick] (2.east)--(4.west);
+    \end{tikzpicture}
+    \caption{Sistema Laboratorio}
+    \label{Fig:2.2.01-Lab}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}[thick,scale=0.6] \centering
+    \node (1) at (-3.5,0) {};
+    \node (2) at (3.5,0) {};
+    \node (3) at (1.8,2.8) {};
+    \node (4) at (-1.8,-2.8) {};
+    \draw[arrows={->},ultra thick] (1.east)--(-0.1,0)  ;
+    \draw[arrows={->},ultra thick] (2.west)--(0.1,0)  ;
+    \draw[arrows={->},ultra thick] (0.1,0.1)--(3.south west)  ;
+    \draw[arrows={->},ultra thick] (-0.1,-0.1)--(4.north east)  ;
+        
+    \node (m1) at (-1.75,0.3) {$m_1$};
+    \node (m2) at (1.75,0.3) {$m_2$};
+    \node (m3) at (2.3,1.8) {$m_3$};
+    \node (m4) at (-1.8,-1.8) {$m_4$};
+    \end{tikzpicture}
+    \caption{Sistema Centro de Masas}
+    \label{Fig:2.2.01-CM}
+\end{subfigure}
+%\caption{Sistemas de referencia para las diferentes partículas}
+\end{figure}
+
+\subsubsection{Introducción a C++}
+
+Nuestro segudno paso fue aprender la sintáxis básica de C++ y ROOT. Para esto realizamos algunos programas básicos, que consistían en realizar histogramas y algunas grásicas; así como la definición de variables y de funciones. \\
+
+\subsubsection{Implementación de la simulación}
+
+Una vez acabamos de introduccirnos a C++ empezamos a implementar la simulación. Lo primero que hicimos fue comprobar si los cálculos  de la cinemática realizados eran correctos. Para la implemetnación de estas ecuaciones se crearon diferentes clases, modularizando el programa principal, de tal modo que matuvimos bien organizadas lsa diferentes funciones. Dado que no conocemos el ángulo con el que van a salir las partículas, creamos un bucle for para recorrer todos los posibles ángulos. Así podemos ver que:  \\
+
+% introducir .eps de la curva angulo-energía
+
+Una vez comprobamos que la cinemática se calculo correctamente, podemos comenzar a construir la simulación. Esto implica implementar a la colisión diferntes partes. La primera de ellas son las pérdidas de energía de las partículas pesadas en el gas de deuterio. 
+
+
+\subsection{Resultados}
+
+\section{Conexión con el grado en físico}
+
+\section{Valoración personal}
 
 
 \end{document}
