@@ -62,7 +62,22 @@
 
 \newpage
 
+
 \section{Información de las prácticas}
+
+\subsection{Datos del estudiante}
+
+\begin{itemize}
+    \item {\bf Daniel Vázquez Lago}
+    \item DNI: 35587279T
+    \item Calle Paseo Matutino, Nº13, Portal 4, 4ºI. Ponteareas, Pontevedra 
+    \item E-mail: danielvazquezlago@gmail.com/daniel.vazquez.lago@rai.usc.es 
+    \item Teléfono de contacto: +34 698 17 06 00
+\end{itemize}
+
+\subsection{Datos de empresa y tutores}
+
+Prácticas realizadas en el IGFAE (Instuto Galego de Física de Altas Enerxías) perteneciente a la Universidad de Santiago de Compostela con página web: https://igfae.usc.es/igfae/, número de teléfono: +34 881814033 ext: 14033 y correo electrónico: igfae@usc.es, bajo la supervisión del tutor Miguel Lozano González, investigador en el IGFAE, y la tutora académica Beatriz Fernández Domínguez, responsable del grupo de Física Corpuscular y Aplicaciones (FICA). Las prácticas fueron realizadas entre el día 5 de Junio y el 25 de Julio del 2023 en horario de 10:00 a 14:00, realizando un total de 150 horas de trabajo.
 
 \section{Memoria de Actividades}
 
@@ -87,11 +102,7 @@ En nuestro caso vamos enviar isótopos de Litio 11 hacia el gas de deuterio haci
 
 En función de la reacción que ocurra la partícula se emitirá con un ángulo (incluso si se produce la misma reacción, se emitirán con ángulos diferntes, ya que puede que se exciten) y con energías diferentes. En función de la energía podremos detectar que partícula (y su excitación) ha sido emitida, mientras que el ángulo dependerá de la estrucutura atómica. Al final del detector habrá detectores de silicio, que nos permitirán medir la energía con la que llegan. Es fundamental entender que los detectores no miden todos los ángulos de salida, si no que se encuentran en una región pequeña del centro, de tal modo que las partículas ligeras (tritio, hidrógeno, deuterio) no se detectan. A la hora de hacer la simulación esto será importante, ya que no todos los litios emitidos son detectados. En función del ángulo, la energía y la distancia recorrida, puede que sean detectados o no. \\
 
-Por otro lado dentro de la caja, donde se encuentra contenido el gas, estará un campo eléctrico que nos permitirá medir el movimiento de los átomos a través del gas, ya que este excitará los electrones del gas, que debido al campo eléctrico, se moverán hacia unos detectores formados por condensadores, de tal modo que podremos no solo detectar el recorrido, si no que podremos saber el instante exacto en el que se detectaron los electrones. De este modo, a través de la ecuación correspondiente, podremos no solo saber el punto de la colisión, si no que también el recorrido de la partícula a través del tiempo.  \\
-
-
-
-({\color{red} mencionar la geometría de la caja, la distancia entre el campo eléctrico (pad) y el medidor, que es lo que vamos a usar para calcular la eficiencia}) \\
+Por otro lado dentro de la caja, donde se encuentra contenido el gas, estará un campo eléctrico (región que llamamos {\it pad}) que nos permitirá medir el movimiento de los átomos a través del gas, ya que este excitará los electrones del gas, que debido al campo eléctrico, se moverán hacia unos detectores formados por condensadores, de tal modo que podremos no solo detectar el recorrido, si no que podremos saber el instante exacto en el que se detectaron los electrones. De este modo, a través de la ecuación correspondiente, podremos no solo saber el punto de la colisión, si no que también el recorrido de la partícula a través del tiempo. Lógicamente exisitirá una región entre el pad y el detector donde no existirá campo eléctrico. ({\color{red} ¿Si no?}) \\
 
 
 \subsection{Trabajo Realizado}
@@ -171,7 +182,7 @@ Una vez acabamos con esto ya tendremos la simulación, en su versión más bási
 El primero de estos es considerar que la perdída de energía es un proceso estadístico, por lo que dos partíciula con la misma energía inicial no van a depostiar la misma energía en el detector de silicio. El segundo es considerar la resolución de nuestros dectectores de energía, ya que energías muy proximas no podrán ser distinguibles. 
 
 \begin{itemize}
-    \item Para incluir el fenómeno estadístico de la pérdida de energía tendremos que tener en cuenta la energía inicial y la distancia que va a recorrer por el medio. Para incluir la energía pérdida perdida podremos calcular directamente (23/07)
+    \item Para incluir el fenómeno estadístico de la pérdida de energía tendremos que tener en cuenta la energía inicial y la distancia que va a recorrer por el medio. Para incluir la energía pérdida de un modo estadístico lo que haremos será lo siguiente: primero evaluaremos el rango de la partícula con la energía inicial ($R_L$) (esto es, la distancia antes de que se pare la partícula) con su respectiva incertidumbre ($u(R_L$)). Dado que la distancia que puede llegar a recorrer en el silicio es conocida ($d=1.5$ mm) podremos evaluar cual es la distancia recorrida con una simple resta ($R_{left}=R_L-d$). Luego podremos evaluar $u(R_{left})$ con la misma ecuación, de tal modo que podamos despejar $u(d)$. Con la incertidumbre y con $d$ crearemos un nuevo valor $d'$ como una gaussiana $\mu=1.5$ y $\sigma=u(d)$. Luego calcularemos $R'_{left}=R_{L}-d'$, pudiendo recuperar la nueva energía con la que sale del detector usando (conocido el rango y el medio, podremos calcular la energía inicial). Así luego solo tendremos que realizar la diferencia entre la energía entrante y la energía de salida para obtener la energía perdida. 
     
     \item La resolución debida a medir con detectores de silicio usando semicontuctores p ha sido estudiado ampliamente por la física electrónica, por lo que simplemente usaremos datos ya tabulados para incluir. Con el grosor del detector de silicio (1.5 mm) podremos calcular la energía pérdida conociendo la energía inicial. De este modo tendremos la energía pérdida. Usando este dato como media, y $\sigma$ dada por la siguiente ecuación: 
     
@@ -201,7 +212,15 @@ A fin de maximizar la eficiencia, hemos tratado de calcular varias de estas grá
 
 \section{Conexión con el grado en física}
 
+Las asignatuas más relacionadas con estas prácticas son {\it Fisica nuclear y de partículas} y {\it Técnicas Experimentales IV}, ambas del 4º curso del grado. La relación que tiene esta práctica con la primera asignatura está, esencialmente, en la parte de las reacciones nucleares y su cinemática, una parte fundamental de dicha asginatura, la cual hemos podido implementar en un problema a la vanguardia científica, demostrando su validez. La relación con la segunda asignatura es clara, ya que hemos necesitado implementar histogramas y ciertas herramientas informáticas fundamentales en la asignatuas, así como conceptos relacionados con la experimentación (detectores de Silicio, estadística derivada de la colisión de partículas...) que también se ven en la misma. 
+
 \section{Valoración personal}
+
+Mi valoración tras la realización de estas prácticas es muy positiva, ya que he podido conocer como funciona por dentro un grupo de investigación experimental, pudiendo ver de primera mano cual es el poder de las herramientas informáticas y de simulación que existen hoy en día, para poder predecir el experimento e incluso mejorarlo sin necesidad de experimentar. Además de esto poder aprender un nuevo lenguaje de programación, tan útil en estos días como es C++, así como la herramienta ROOT para poder evaluar y rellenar histogramas, me parece fundamental para un físico. \\
+
+Más allá de los conocimientos adquiridos, que es el motivo principal por lo que solicité estas prácticas, y los cuales, he de decir, han superado mis expectativas, me quedo con la experiencia de realizar un proyecto muy divertido, interesante y el cual me ha enseñado que la física nuclear e incluso la física experimental es mucho mas de lo que se valora en el ámbito académico.
+
+
 
 
 \end{document}
