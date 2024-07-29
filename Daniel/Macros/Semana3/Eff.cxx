@@ -67,4 +67,5 @@ void Eff()
     auto *c0{new TCanvas};
     mg->Draw("apl plc pmc");
     legend->Draw();
+    c0->SaveAs(TString::Format("./Eps_figure_eff/Eff.eps"));
 }

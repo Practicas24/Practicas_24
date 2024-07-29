@@ -95,7 +95,7 @@ void GetCanvas(TCanvas *c, const std::vector<TH1D *> &px)
 
 // MAIN
 
-TCanvas* principal(std::string name, double distancia)
+TCanvas *principal(std::string name, double distancia)
 {
 
     ActPhysics::SRIM srim; // &srim -> asi se ''hace'' un pointer
@@ -209,7 +209,7 @@ TCanvas* principal(std::string name, double distancia)
 
         SilDist *= 10; // Convertimos la distancai de cm a mm
         if (SilIndice != -1)
-        {   
+        {
             hThetaCM->Fill(theta4_cm * TMath::RadToDeg());
             hSilDist->Fill(SilDist);
             // std::cout <<T4<<"\n";
@@ -240,29 +240,36 @@ TCanvas* principal(std::string name, double distancia)
     gStyle->SetPalette(kCool);
     auto *c0{new TCanvas{"c0", "T4_vs_theta"}};
     c0->DivideSquare(4);
-    //c0->cd(1);
-    //histo_T->Draw("colz");
-    //c0->cd(1); 
-    //histo_DT->Draw("colz");
-    //c0->cd(3);
-    //hT1->Draw("colz");
-    //c0->cd(4);
-    //hSilDist->Draw();
+    // c0->cd(1);
+    // histo_T->Draw("colz");
+    // c0->cd(1);
+    // histo_DT->Draw("colz");
+    // c0->cd(3);
+    // hT1->Draw("colz");
+    // c0->cd(4);
+    // hSilDist->Draw();
     c0->cd(1);
     g4Li10->SetLineColor(kOrange);
-    g4Li10->SetLineWidth(4);
+    g4Li10->SetLineWidth(1);
     hT4c->Draw("colz");
     g4Li10->Draw("l");
     gPad->SaveAs(TString::Format("./Eps_figure/%.f_measured_kin.eps", distancia));
+    if (distancia == 17.0 || distancia == 5.0)
+    {
+        gPad->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/%.f_measured_kin.eps", distancia));
+    }
     c0->cd(2);
     hkintheo->Draw("colz");
     g4Li10->Draw("l");
     gPad->SaveAs(TString::Format("./Eps_figure/%.f_simulation_kin.eps", distancia));
+    if (distancia == 17.0 || distancia == 5.0)
+    {
+        gPad->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/%.f_simulation_kin.eps", distancia));
+    }
     c0->cd(3);
     hThetaCM->Draw();
     c0->cd(4);
     hThetaCMAll->Draw();
-
 
     // Problema: Se va la energía a cero ¿Es normal?
 
@@ -294,7 +301,8 @@ TCanvas* principal(std::string name, double distancia)
 }
 
 void Simulacion_2()
-{   std::vector<TCanvas*> c_vector;
+{
+    std::vector<TCanvas *> c_vector;
 
     for (double i = 0.0; i < 15.5; i += 2)
     {
@@ -309,7 +317,4 @@ void Simulacion_2()
     std::string name{TString::Format("simple%.0f", 50.0).Data()};
 
     c_vector.push_back(principal(name, distancia));
-
-    
-
 }

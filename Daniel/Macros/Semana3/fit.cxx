@@ -16,9 +16,8 @@ TGraphErrors *principal(std::string name, double distancia)
     fin->ls();
     // Gardamos
     std::vector<TH1D *> ps;
-    for (int p = 0; p < fin->GetListOfKeys()->GetSize(); p++)
-        ps.push_back(fin->Get<TH1D>(TString::Format("p%d",p)));
-
+    for (int p = 0; p < fin->GetListOfKeys()->GetSize() - 1; p++)
+        ps.push_back(fin->Get<TH1D>(TString::Format("p%d", p)));
     auto *gother{new TGraphErrors};
 
     auto *c0{new TCanvas("c0", "Projections")};
@@ -27,11 +26,18 @@ TGraphErrors *principal(std::string name, double distancia)
     for (int i = 0; i < ps.size(); i++)
     {
         c0->cd(i + 1);
+        ps[i]->GetXaxis()->SetRangeUser(13, 19);
         ps[i]->Fit("gaus", "Q");
         auto *func{ps[i]->GetFunction("gaus")};
-        gother->SetPoint(gother->GetN(), i*2+41, func->GetParameter(2));
+        if (i == 4)
+        {
+            gPad->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/%.f_fit.eps", distancia));
+        }
+        gother->SetPoint(gother->GetN(), i * 2 + 41, func->GetParameter(2));
         gother->SetPointError(gother->GetN() - 1, 0, func->GetParError(2));
     }
+
+    c0->SaveAs(TString::Format("./Eps_figure_fit/%.f_fit.eps", distancia));
     return gother;
 }
 void fit()
@@ -47,29 +53,27 @@ void fit()
         gother_vector.push_back(principal(name, distancia));
     }
 
+    auto *legend{new TLegend{0.7, 0.7, 0.95, 0.95}};
 
-    auto* legend{new TLegend {0.7,0.7,0.95,0.95}};  
-
-    auto* mg {new TMultiGraph};
+    auto *mg{new TMultiGraph};
     mg->SetTitle(";E [MeV];#sigma [#circ]");
-    //Format
-    std::vector<int> ms {};
-    std::vector<double> dists {3,5,7,9,11,13,15,17};
-    std::vector<double> mk_style {20,21,22,23,33,34,45,47};
+    // Format
+    std::vector<int> ms{};
+    std::vector<double> dists{3, 5, 7, 9, 11, 13, 15, 17};
+    std::vector<double> mk_style{20, 21, 22, 23, 33, 34, 45, 47};
     int i{0};
-    for(auto* g : gother_vector)
-    {   
-        
+    for (auto *g : gother_vector)
+    {
+
         g->SetMarkerStyle(mk_style[i]);
         g->SetMarkerSize(1.3);
         mg->Add(g);
-        legend -> AddEntry(g,TString::Format("%.0f cm",dists[i]));
-        i+=1;
+        legend->AddEntry(g, TString::Format("%.0f cm", dists[i]));
+        i += 1;
     }
-    
+
     gStyle->SetPalette(kCool);
     auto *c1{new TCanvas("c1", "sigma_projections")};
     mg->Draw("apl plc pmc");
-    legend -> Draw();
-
+    legend->Draw();
 }
