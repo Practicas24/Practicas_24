@@ -76,6 +76,10 @@ void Cinematica()
     gother10->SetTitle("Cinematica para 11Li(d,t);#theta_{4Lab} [#circ];E_{4Lab}");
     gother10->Draw("al");
 
+    gPad->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/Cinematica11Li.eps"));
+
+
+
     canvas10->cd(3);
     g3Li10->SetLineColor(kOrange);
     g3Li10->SetLineWidth(4);
@@ -87,5 +91,8 @@ void Cinematica()
     gother3->SetLineColor(kRed);
     gother3->SetTitle("Cinematica para 11Li(d,t);#theta_{3Lab} [#circ];E_{3Lab}");
     gother3->Draw("al");
+
+    gPad->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/CinematicaH.eps"));
+
 }
 

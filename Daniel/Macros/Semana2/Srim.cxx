@@ -111,10 +111,10 @@ for(double x=0;x<Distancia_maxima_45;x += step){
 
 
 auto* canvas1 {new TCanvas {"canvas1", "Perdida_energia"}};
-canvas1->DivideSquare(2);
+//canvas1->DivideSquare(2);
 
 
-canvas1->cd(1);
+//canvas1->cd(1);
 gother1->SetLineColor(kRed);
 gother1->SetLineWidth(4);
 gother1_15->SetLineColor(kBlue);
@@ -125,34 +125,36 @@ gother1_45->SetLineWidth(4);
 gother1->SetTitle("Energia perdida vs Distancia;x;E_{perdida}");
 
 gother1->Draw("al");
-gother1_15->Draw("l");
-gother1_45->Draw("l");
+//gother1_15->Draw("l");
+//gother1_45->Draw("l");
 
 auto* legend1{new TLegend {0.7,0.7,0.95,0.95}};
 legend1 -> AddEntry(gother1,"#theta = 0");
-legend1 -> AddEntry(gother1_15,"#theta = 15");
-legend1 -> AddEntry(gother1_45,"#theta = 45");
-legend1 -> Draw();
+//legend1 -> AddEntry(gother1_15,"#theta = 15");
+//legend1 -> AddEntry(gother1_45,"#theta = 45");
+//legend1 -> Draw();
+gPad->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/srim.eps"));
 
-canvas1->cd(2);
-gother2->SetLineColor(kRed);
-gother2->SetLineWidth(4);
-gother2_15->SetLineColor(kBlue);
-gother2_15->SetLineWidth(4);
-gother2_45->SetLineColor(kOrange);
-gother2_45->SetLineWidth(4);
 
-gother2->SetTitle("Energia perdida vs Energia;E;E_{perdida}");
+//canvas1->cd(2);
+//gother2->SetLineColor(kRed);
+//gother2->SetLineWidth(4);
+//gother2_15->SetLineColor(kBlue);
+//gother2_15->SetLineWidth(4);
+//gother2_45->SetLineColor(kOrange);
+//gother2_45->SetLineWidth(4);
 
-gother2->Draw("al");
-gother2_15->Draw("l");
-gother2_45->Draw("l");
+//gother2->SetTitle("Energia perdida vs Energia;E;E_{perdida}");
 
-auto* legend2{new TLegend {0.7,0.7,0.95,0.95}};
-legend2 -> AddEntry(gother2,"#theta = 0");
-legend2 -> AddEntry(gother2_15,"#theta = 15");
-legend2 -> AddEntry(gother2_45,"#theta = 45");
-legend2 -> Draw();
+//gother2->Draw("al");
+//gother2_15->Draw("l");
+//gother2_45->Draw("l");
+
+//auto* legend2{new TLegend {0.7,0.7,0.95,0.95}};
+//legend2 -> AddEntry(gother2,"#theta = 0");
+//legend2 -> AddEntry(gother2_15,"#theta = 15");
+//legend2 -> AddEntry(gother2_45,"#theta = 45");
+//legend2 -> Draw();
 
 
 }
