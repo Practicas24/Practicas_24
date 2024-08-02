@@ -158,7 +158,7 @@ TCanvas *principal(std::string name, double distancia)
     // Definimos la normal
     ROOT::Math::XYZVector normal{1, 0, 0};
 
-    for (int i = 0; i < 1000000; i += 1)
+    for (int i = 0; i < 10000000; i += 1)
     {
 
         ROOT::Math::XYZPoint verticeCentrado{

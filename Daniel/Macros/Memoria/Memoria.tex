@@ -88,57 +88,53 @@ El objetivo principal de estas prácticas es reproducir la respuesta real del de
 \begin{equation}
     ^{11}\mathrm{Li}+^2\mathrm{H} \rightarrow ^3\mathrm{H}+^{10}\mathrm{Li} \Longleftrightarrow 1 + 2 \rightarrow 3 + 4
 \end{equation}
-El motivo por el cual esta reacción es de interes para la física nuclear moderna es que nos permitirá comprender mejor la estrucutura atómica del litio 10, un isótopo muy inestable. Conocer con rigor la estructura para isótopos inestables es fundamental en la fisica nuclear, ya que nos permitirá crear mejores modelos para las exitaciones de los átomos (así como las de los estados fundamentales).  \\
+El motivo por el cual esta reacción es de interes para la física nuclear moderna es que nos permitirá comprender mejor la estrucutura nuclear del litio 10, un isótopo muy inestable. Conocer con rigor la estructura para isótopos inestables es fundamental en la fisica nuclear, ya que nos permitirá crear mejores modelos para las exitaciones de los átomos (así como las de los estados fundamentales).  \\
 
-La estructura atómica podrá hallarse en función del ángulo de salida y de las energías ($\theta, T$) de las partículas pesadas. Consecuentemente es de vital importancia no solo tener los mejores detectores, si no poder predecir cuales cual es la mejor estrucutra para el detector (tamaño, grosor de los detectores de silicio...). En esta simulación nos centraremos principalmente en el cálculo de la $s(\theta)$ (o al menos en parte de ella) sin olvidarnos de algunas de las fuentes de incertidumbre de la energía mas importantes, como presentaremos a continuación. 
+La estructura interna podrá hallarse en función del ángulo de salida y de las energías ($\theta, T$) de las partículas pesadas. Consecuentemente es de vital importancia no solo tener los mejores detectores, si no poder predecir cuales cual es la mejor disposición para el detector (tamaño, grosor de los detectores de silicio...). En esta simulación nos centraremos principalmente en el cálculo de la incertidumbre $s(\theta)$ (o al menos en parte de ella) sin olvidarnos de algunas de las fuentes de incertidumbre de la energía mas importantes, como presentaremos a continuación. 
 
 \subsection{¿Qué es el ACTAR TPC?}
 
-El ACTAR TPC (ACtive TARGet and Time Projection Chamber) es un detector gaseoso activo \footnote{un detector gaseoso activo quiere decir que el gas actúa dentro del a reacción.} de reacciones nucleares. La estructura es la siguiente: \\
+El ACTAR TPC (ACtive TARGet and Time Projection Chamber) es un detector gaseoso activo \footnote{un detector gaseoso activo quiere decir que el gas actúa dentro del a reacción.} de reacciones nucleares. En nuestro caso vamos a emitir isótopos de litio 11 hacia el gas de deuterio hacia un detector de silicio. A medida que el isótopo vaya avanzando perderá energía (regido por la {\bf ecuación de Bethe-Bloch}), pudiendo colisionar con un átomo de deuterio en cualquier posición dentro de la caja (en la figura \ref{sub@Fig:2.2.01-actar} podemos ver una caja negra, que es la región donde se encuentra el gas). Una vez choque el litio 11 se producirá la reacción mencionada antes, que es la de interés, y otras, como puede ser una que produzca litio 12 o incluso manteniendo litio 10.    \\
 
 
 \begin{figure}[h!] \centering
     \begin{subfigure}[b]{0.45\linewidth} \centering
         \includegraphics[scale=0.55]{actar.png}
         \caption{ACTAR TPC}
-        \label{Fig:2.2.01-Lab}
+        \label{Fig:2.2.01-actar}
     \end{subfigure}
     \begin{subfigure}[b]{0.45\linewidth} \centering
         \includegraphics[scale=0.4]{geo.pdf}
         \caption{geometría implementada}
-        \label{Fig:2.2.01-CM}
+        \label{Fig:2.2.01-geometria}
     \end{subfigure}
     %\caption{Sistemas de referencia para las diferentes partículas}
 \end{figure}
     
+La función del ACTAR TPC es doble. Por un lado dentro de la caja, donde se encuentra contenido el gas, habrá un campo eléctrico (región que llamamos {\it ACTAR} o {\it TPC}) que nos permitirá medir el movimiento de los átomos a través del gas, ya que  el movimiento de estos ionizará el gas, que debido a la acción campo eléctrico, hará que los electrones se muevan  hacia unos detectores que actuarán como una suerte de condensadores (los detectores se encuentran en la región naranja dentro de la caja negra de la figura \ref{Fig:2.2.01-actar}). Conociedo entonces el recorrido y la velocidad de deriva podremos realizar una construcción tridimensional (siendo una de las dimensiones la temporal). Lógicamente exisitirá una región entre el ACTAR TPC propiamente dicho y los detectores de silicio donde no existirá campo eléctrico, necesaria para poder evitar las interacciones entre el campo eléctrico del pad (3000 V) y la diferencia de potencial de los detectores de silicio (150V). Una distancia suficiente entre estos sería de 3-5cm, pero como el detector real tiene, además, detectores de las partículas ligeras (en nuestro caso tritio), esta distancia es ampliada hasta unos 15 cm (aproximadamente).  \\
 
-En nuestro caso vamos enviar isótopos de Litio 11 hacia el gas de deuterio hacia un detector de silicio. A medida que el isótopo vaya avanzando perderá energía (regido por la {\bf ecuación de Bethe-Bloch}), pudiendo  chocarse con un deuterio en cualquier parte. Una vez choque el litio 11 se producirá la reacción mencionada antes y otras (es posible que se produzca litio 12 de la reacción, o que no llegue a producirse la reacción). \\
-
-En función de la reacción que ocurra la partícula se emitirá con un ángulo (incluso si se produce la misma reacción, se emitirán con ángulos diferntes, ya que puede que se exciten) y con energías diferentes. En función de la energía podremos detectar que partícula (y su excitación) ha sido emitida, mientras que el ángulo dependerá de la estrucutura atómica. Al final del detector habrá detectores de silicio, que nos permitirán medir la energía con la que llegan. Es fundamental entender que los detectores no miden todos los ángulos de salida, si no que se encuentran en una región pequeña del centro, de tal modo que las partículas ligeras (tritio, hidrógeno, deuterio) no se detectan. A la hora de hacer la simulación esto será importante, ya que no todos los litios emitidos son detectados. En función del ángulo, la energía y la distancia recorrida, puede que sean detectados o no. \\
-
-Por otro lado dentro de la caja, donde se encuentra contenido el gas, estará un campo eléctrico (región que llamamos {\it pad}) que nos permitirá medir el movimiento de los átomos a través del gas, ya que este excitará los electrones del gas, que debido al campo eléctrico, se moverán hacia unos detectores formados por condensadores, de tal modo que podremos no solo detectar el recorrido, si no que podremos saber el instante exacto en el que se detectaron los electrones. De este modo, a través de la ecuación correspondiente, podremos no solo saber el punto de la colisión, si no que también el recorrido de la partícula a través del tiempo. Lógicamente exisitirá una región entre el pad y el detector donde no existirá campo eléctrico, necesaria para poder evitar las interacciones entre el campo eléctrico del pad (3000 V) y la diferencia de potencial de los detectores de Silicio (150V). Una distancia suficiente entre estos sería de 3-5cm, pero como el detector real tiene, además, detectores de las partículas ligeras (en nuestro caso tritio), esta distancia es ampliada hasta unos 15 cm (aproximadamente).  \\
-
-El grosor de los detectores también es muy importante, ya que como vamos a ver, lo que nosotros medimos en el laboratorio es la energía que pierden nuestros átomos en los detectores de silicio. Unos detectores delgados harán que pasen ciertas partículas, por lo que obtendremos para diferentes ángulos mismos valores de la energía (ya que este tendrá un ``máximo detectable''). Un tamaño de 1.5 mm será más que suficiente para la partícula pesada. 
+Por otro lado tendremos detectores de Silicio ubicados al final de la caja (cuadrados celestes de la figura \ref{sub@Fig:2.2.01-actar}) que, como veremos, nos permitirá obtener las energías y ángulos de las particulas emitidas tras la colisión. Cabe destacar que el grosor de estos detectores también es muy importante, ya que como vamos a ver, lo que nosotros medimos en el laboratorio es la energía que pierden nuestros átomos en los detectores de silicio. Unos detectores delgados harán que ciertas partículas no se paren, por lo que obtendremos para diferentes ángulos mismos valores de la energía (ya que este tendrá un ``máximo detectable''). A la energía para la cual la partícula se deja de parar la llamamos {\it punchtrough}. Un tamaño de 1.5 mm será más que suficiente para la partícula pesada, ya que la energía máxima de las partículas es de 90 MeV mientras que la de punchtrough (para 1.5 mm) es de 125 MeV.  
 
 
 \subsection{Trabajo Realizado}
 
 \subsubsection{Cálculo de la cinemática}
 
-La primera tarea realizada fue calcular la cinemática de las partículas. Una buena aproximación de la colisión se puede hacer suponiendo una colisión elástica dentro de la relatividad especial, ya que debido a las altas energías y la baja masa de las partículas, usar la relatividad especial se hace obligatorio. Una mejor sería suponer que existe una energía perdida debido a la excitación de protones/neutrones en el núcleo de los átomos.  \\
+La primera tarea realizada fue calcular la cinemática de las partículas. La mejor aproximación que se puede hacer de la reacción se hace dentro de la relatividad especial, debido a las altas energías y la baja masa de las partículas. De manera particular nosotros asumimos que las partículas emitidas no están excitadas (energía de excitación nula).
 
 Resolver la cinemática de la colsión consiste en calcular las energías de las diferentes partículas . El sistema de referencia de más interés es el nuestro, que llamamos laboratorio (figura \ref{Fig:2.3.01-Lab}), y es aquel en el que la partícula del litio 11 incide con una energía $T_{beam}$ sobre la partícula de deuterio que suponemos quieta. El otro sistema de referencia de interés es el sistema centro de masas (figura \ref{Fig:2.3.01-CM}). \\
 
-Tras un cálculo podimos obtener la energía cinética de las partículas y su ángulo de salida (respecto el eje de incidencia) en el sistema laboratorio a partir de dos parámetros: el ángulo de salida de la partícula en el sistema de centro de masas, y de $T_{beam}$. Dado que este último es un valor conocido, podríamos obtener $\theta_4$ y $\theta_3$ a partir de $T_3$ y $T_4$.   \\
+Tras un cálculo que no se incluye aquí pode tema de espacio, pudimos obtener la energía cinética de las partículas y su ángulo de salida (respecto el eje de incidencia) en el sistema laboratorio a partir de dos parámetros: el ángulo de salida de la partícula en el sistema de centro de masas, y de $T_{beam}$. Dado que este último es un valor conocido, podríamos obtener $\theta_4$ y $\theta_3$ a partir de $T_3$ y $T_4$.   \\
 
 \begin{figure}[h!] \centering
 \begin{subfigure}[b]{0.45\linewidth} \centering
     \begin{tikzpicture}[thick,scale=0.8] 
-    \node (1) at (-3,0) {};
-    \node (2) at (0,0) {$m_2$};
-    \node (3) at (3,1) {$m_3$};
-    \node (4) at (3,-1) {$m_4$};
-    \node (m1) at (-1.5,0.5) {$m_1$};
+    \node (1) at (-3,0+1.24) {};
+    \node (2) at (0,0+1.24) {$m_2$};
+    \node (3) at (3,1+1.24) {$m_3$};
+    \node (4) at (3,-1+1.24) {$m_4$};
+    \node (m1) at (-1.5,0.5+1.24) {$m_1$};
+    \node (h) at (0.0,0.0-2*0.5) {};
     \draw[arrows={->},ultra thick] (1.east)--(2.west);
     \draw[arrows={->},ultra thick] (2.east)--(3.west);
     \draw[arrows={->},ultra thick] (2.east)--(4.west);
@@ -150,8 +146,8 @@ Tras un cálculo podimos obtener la energía cinética de las partículas y su �
     \begin{tikzpicture}[thick,scale=0.8] 
     \node (1) at (-3.5,0) {};
     \node (2) at (3.5,0) {};
-    \node (3) at (1.8,2.8) {};
-    \node (4) at (-1.8,-2.8) {};
+    \node (3) at (1.8,2.8*0.8) {};
+    \node (4) at (-1.8,-2.8*0.8) {};
     \draw[arrows={->},ultra thick] (1.east)--(-0.1,0)  ;
     \draw[arrows={->},ultra thick] (2.west)--(0.1,0)  ;
     \draw[arrows={->},ultra thick] (0.1,0.1)--(3.south west)  ;
@@ -160,7 +156,7 @@ Tras un cálculo podimos obtener la energía cinética de las partículas y su �
     \node (m1) at (-1.75,0.3) {$m_1$};
     \node (m2) at (1.75,0.3) {$m_2$};
     \node (m3) at (2.3,1.8) {$m_3$};
-    \node (m4) at (-1.8,-1.8) {$m_4$};
+    \node (m4) at (-2.1,-1.8) {$m_4$};
     \end{tikzpicture}
     \caption{Sistema Centro de Masas}
     \label{Fig:2.3.01-CM}
@@ -170,11 +166,11 @@ Tras un cálculo podimos obtener la energía cinética de las partículas y su �
 
 \subsubsection{Introducción a C++}
 
-Nuestro segudno paso fue aprender la sintáxis básica de C++ y ROOT. Para esto realizamos algunos programas básicos, que consistían en realizar histogramas y algunas grásicas; así como la definición de variables y de funciones. \\
+Nuestro segudno paso fue aprender la sintáxis básica de C++ y ROOT. Para esto realizamos algunos programas básicos, que consistían en realizar histogramas y algunas grásicas; así como la definición de variables y de funciones. Otra de las partes mas importantes fue la implementación de la geometría, los tamaños de la figura  \\
 
 \subsubsection{Implementación de la simulación}
 
-Una vez acabamos de introduccirnos a C++ empezamos a implementar la simulación. Lo primero que hicimos fue comprobar si los cálculos  de la cinemática realizados eran correctos. Para la implemetnación de estas ecuaciones se crearon diferentes clases, modularizando el programa principal, de tal modo que matuvimos bien organizadas lsa diferentes funciones. Dado que no conocemos el ángulo con el que van a salir las partículas, creamos un bucle for para recorrer todos los posibles ángulos. Así podemos ver que:  \\
+Una vez acabamos de introduccirnos a C++ empezamos a implementar la simulación. Lo primero que hicimos fue comprobar si los cálculos  de la cinemática realizados eran correctos. Para la implemetnación de estas ecuaciones se crearon diferentes clases, modularizando el programa principal, de tal modo que matuvimos bien organizadas las diferentes funciones. Dado que no conocemos el ángulo con el que van a salir las partículas, ya que este es un parámetro libre, usamos una clase para todo el intervalo de $\theta_{cm}$ (entre 0 y 180 grados). En la siguiente imagen podemos ver la cinemática del tritio (\ref{sub@Fig:2.2.01-hidrogeno}) y la del litio (\ref{sub@Fig:2.2.01-litio}), que es la de interés.   \\
 
 \begin{figure}[h!] \centering
     \begin{subfigure}[b]{0.45\linewidth} \centering
@@ -191,17 +187,18 @@ Una vez acabamos de introduccirnos a C++ empezamos a implementar la simulación.
 \end{figure}
     
 
+Una vez comprobamos que la cinemática se calculo correctamente, podemos comenzar a construir la simulación. Esto implica implementar a la colisión los diferentes factores a tener en cuenta. 
 
-Una vez comprobamos que la cinemática se calculo correctamente, podemos comenzar a construir la simulación. Esto implica implementar a la colisión los diferentes factores a tener en cuenta. Por orden fueron:
 
-\begin{itemize}
-    \item En primer lugar tenemos que reformar la manera de obtener los ángulos. Dado que en la realidad no sabemos (aunque si podamos predecir) los ángulos con los que va a salir la partícula, lo que hacemos es crear una función aleatoria para el ángulo $\theta_{CM}$ de la partícula pesada (partícula 3, litio 11). Es importante recalcar que el número de interacciones debe ser elevado. 
+\begin{enumerate}
+
+    \item  Primero tenemos que obtener cual es el vértice de la reacción (punto donde se produce la reacción), el cual tendremos que obtener mediante una variable aleatorio. 
     
-
-    \item Lo segundo que tenemos que hacer es ver si el litio 11 que se emite en el punto de colisión llega. Como tampoco sabemos el punto exacto en el que van a reaccionar, también haremos aleatoria esta variable. Para saber si es detectado o no, basta con extender la trayectoria de la partícula (suponiendo que se mueve en una línea recta) y ver si llega al detector. Para esto hay que tener en cuenta las dimensiones del detector. 
+    \item También tendremos que introducir el ángulo de salida, para el cual creamos una variable aleatoria para el ángulo $\theta_{CM}$ de la partícula pesada (partícula 4, litio 10). Es importante recalcar que el número de interacciones debe ser elevado, así como que hemos hecho una simplificación al asumir que $\theta_{CM}$ esta uniformemente distribuido cuando este en realidad vendrá pesado por la sección eficaz diferencial, que no está incluido. De hecho es en este observable en el que está contenida la información física de la estructura interna del núcleo. 
     
+    \item Lo tercero que tenemos que hacer es ver si el litio 10 que se emite en el vértice llega al detector de silicio. Para saber si es detectado o no, basta con extender la trayectoria de la partícula (suponiendo que se mueve en una línea recta) y ver si llega al detector. Para esto hay que tener en cuenta las dimensiones del detector.     
 
-    \item También habrá que tener en cuenta las pérdidas de energía, ya que si la partícula llega con energía cero no podrá ser detectada. Para esto tenemos que implementar la ecuación de Bethe-Bloch para la partícula incidente y para la partícula pesada dentro del detector de silicio. Siempre que la partícula llegue al detector con energía cero la partícula no podrá ser detectada, por lo que tendremos que incluir este factor. En la imagen \ref{Fig:energia_perdida} podemos ver la pérdida de energía de una partícula en función de la distancia.
+    \item También habrá que tener en cuenta las pérdidas de energía, ya que si la partícula llega con energía cero no podrá ser detectada. Para esto tenemos que implementar la ecuación de Bethe-Bloch para la partícula incidente y para la partícula pesada dentro del detector de silicio. Siempre que la partícula llegue al detector con energía cero la partícula no podrá ser detectada, por lo que tendremos que incluir este factor. En la imagen \ref{Fig:energia_perdida} podemos ver la pérdida de energía de una partícula en función de la distancia, para el cual usamos el programa SRIM. 
     
     \begin{figure}[h!] \centering
         \includegraphics[scale=0.7]{srim.eps}
@@ -209,17 +206,17 @@ Una vez comprobamos que la cinemática se calculo correctamente, podemos comenza
         \label{Fig:energia_perdida}
     \end{figure}
 
-\end{itemize}
+\end{enumerate}
 
-Una vez acabamos con esto ya tendremos la simulación, en su versión más básica. Como esta es una simulación del experimento real, nosotros tendremos que volver a obtener, con los datos finales y medibles (energía périda en el silicio $\Delta T$, ángulo de la partícula 3) los datos que queremos obtener (energía al salir de la colisión de la partícula 3, ángulo de la partícula 3). Esto implicará una {\it reconstrucción} de la cinemática a partir de estos datos. En ese caso tendremos que incluir algún tipo de incertidumbre en la medida de la pérdida de energía dentro del silicio. Estas vendrán dadas por dos factores. \\
+Una vez acabamos con esto ya tendremos la simulación, en su versión más básica. Como esta es una simulación del experimento real, nosotros tendremos que volver a obtener, con los datos finales y medibles (energía périda en el silicio $\Delta E$, ángulo de la partícula 4) los datos que queremos obtener (energía al salir de la colisión de la partícula 4, ángulo de la partícula 5). Esto implicará una {\it reconstrucción} de la cinemática a partir de estos datos. En ese caso tendremos que incluir algún tipo de incertidumbre en este proceso de pérdida de energía dentro del silicio. Estas vendrán dadas por dos factores. \\
 
 
 El primero de estos es considerar que la perdída de energía es un proceso estadístico, por lo que dos partíciula con la misma energía inicial no van a depostiar la misma energía en el detector de silicio. El segundo es considerar la resolución de nuestros dectectores de energía, ya que energías muy proximas no podrán ser distinguibles. 
 
 \begin{itemize}
-    \item Para incluir el fenómeno estadístico de la pérdida de energía tendremos que tener en cuenta la energía inicial y la distancia que va a recorrer por el medio. Para incluir la energía pérdida de un modo estadístico lo que haremos será lo siguiente: primero evaluaremos el rango de la partícula con la energía inicial ($R_L$) (esto es, la distancia antes de que se pare la partícula) con su respectiva incertidumbre ($u(R_L$)). Dado que la distancia que puede llegar a recorrer en el silicio es conocida ($d=1.5$ mm) podremos evaluar cual es la distancia recorrida con una simple resta ($R_{left}=R_L-d$). Luego podremos evaluar $u(R_{left})$ con la misma ecuación, de tal modo que podamos despejar $u(d)$. Con la incertidumbre y con $d$ crearemos un nuevo valor $d'$ como una gaussiana $\mu=1.5$ y $\sigma=u(d)$. Luego calcularemos $R'_{left}=R_{L}-d'$, pudiendo recuperar la nueva energía con la que sale del detector usando (conocido el rango y el medio, podremos calcular la energía inicial). Así luego solo tendremos que realizar la diferencia entre la energía entrante y la energía de salida para obtener la energía perdida ($\Delta T$). 
+    \item Para incluir el fenómeno estadístico de la pérdida de energía tendremos que tener en cuenta la energía inicial y la distancia que va a recorrer por el medio. Para incluir la energía pérdida de un modo estadístico lo que haremos será lo siguiente: primero evaluaremos el rango de la partícula con la energía inicial ($R_L$) (esto es, la distancia antes de que se pare la partícula) con su respectiva incertidumbre ($u(R_L$)). Dado que la distancia que puede llegar a recorrer en el silicio es conocida ($d=1.5$ mm) podremos evaluar cual es la distancia recorrida con una simple resta ($R_{left}=R_L-d$). Luego podremos evaluar $u(R_{left})$ con la misma ecuación, de tal modo que podamos despejar $u(d)$. Con la incertidumbre y con $d$ crearemos un nuevo valor $d'$ como una gaussiana $\mu=1.5$ y $\sigma=u(d)$. Luego calcularemos $R'_{left}=R_{L}-d'$, pudiendo recuperar la nueva energía con la que sale del detector usando (conocido el rango y el medio, podremos calcular la energía inicial). Así luego solo tendremos que realizar la diferencia entre la energía entrante y la energía de salida para obtener la energía perdida ($\Delta E$) en el gas. 
     
-    \item La resolución debida a medir con detectores de silicio usando semicontuctores p ha sido estudiado ampliamente por la física electrónica, por lo que simplemente usaremos datos ya tabulados para incluir. Con el grosor del detector de silicio (1.5 mm) podremos calcular la energía pérdida conociendo la energía inicial. De este modo tendremos la energía pérdida. Usando este dato como media, y $\sigma$ dada por la siguiente ecuación: 
+    \item La resolución debida a medir con detectores de silicio usando semicontuctores p ha sido estudiado ampliamente por la física electrónica, por lo que simplemente usaremos datos ya tabulados para incluir. Sabiendo que era de 50 keV a 5.5 MeV (la pérdida de energía), usamos la siguiente fórmula para extrapolar la energía, sabiendo que la resolución depende de la raíz de la energía $E$: 
     
     \begin{equation}
         \sigma = \frac{0.0213 \  \text{MeV}}{2.35} \sqrt{E}
@@ -228,12 +225,10 @@ El primero de estos es considerar que la perdída de energía es un proceso esta
 
 \end{itemize}
 
-Una vez tenemos todo esto ya tenemos una simulación del experimento mucho mas realista, donde podamos obtener los resultados tal y como los mediríamos en el laboratorio, y compararlos con los que obtenemos en la simulación. Idealmente ambos deberán coincidir, aunque como veremos, debido a los factores anteriores (resolución, pérdidas estadísticas) no se verificará. Como podemos ver en las figuras siguientes para dos distancias diferentes. \\
 
 
-Se puede ver en la imagen para 5 cm \ref{Fig:2.3.01-measured-5} y \ref{Fig:2.3.01-theo-5} y en la imagen  para 17 cm \ref{Fig:2.3.02-measured-17} y \ref{Fig:2.3.02-theo-17} que existe una diferencia real entre las colisiones ``medidas'' (las que llegan al detector, las llamadas reconstuidas) y las ``realmente emitidas'' (todas las que ocurren, creadas por la simulación), lo que era de esperar, y es una demostración de que la simulación implementa correctamente los pasos fundamentales anteriores. Además se puede ver que las partículas detectadas tienen una mayor dispersión respecto la línea amarilla, que es la {\it cinemática teórica} (que podemos comprobar que coincide con la imagen \ref{Fig:2.2.01-litio}), lo que es correcto según hemos introducido. \\
 
-
+Una vez tenemos todo esto ya tenemos una simulación del experimento mucho mas realista, donde podamos obtener los resultados tal y como los mediríamos en el laboratorio, y compararlos con los que obtenemos en la simulación. Idealmente ambos deberán coincidir, aunque como veremos, debido a los factores anteriores (resolución, pérdidas estadísticas) no se verificará. Como podemos ver en las figuras siguientes, para dos distancias diferentes obtenemos un patrón simila: las partículas más detectadas son aquellas de ángulos bajos, mientras que existe una región de dispersión mucho mas grande para las energías. También se puede verificar que para las distancias de 17 cm las partículas detectadas son menos que las partículas detectadas para 5 cm (para los ángulos mas grandes principalmente). 
 
 \begin{figure}[h!] \centering
     \begin{subfigure}[b]{0.45\linewidth} \centering
@@ -268,23 +263,44 @@ Se puede ver en la imagen para 5 cm \ref{Fig:2.3.01-measured-5} y \ref{Fig:2.3.0
 
 \subsection{Resultados}
 
-Como ya hemos dicho nos interesa reducir la incertidumbre de la parte angular lo máximo posible. La incertidumbre del factor ángulo, que es lo que estamos tratando de estudiar, está relacionada con la $\sigma$ de la gaussiana que se forma para una determinada energía, por lo que en función de la energía de la partícula 4 tendremos una $\sigma$ (y una $s(\sigma)$). Sin embargo no todas los ángulos obtenidos para un rango de energías determinado se comportan de manera gaussiana, solo aquellas que se encuentran en la parte central, con ángulos grandes, tal y como podemos ver en la imagen \\
+Como ya hemos dicho nos interesa reducir la incertidumbre de la parte angular lo máximo posible. La incertidumbre del factor ángulo, que es lo que estamos tratando de estudiar, está relacionada con la $\sigma$ de la gaussiana que se forma para una determinada energía, por lo que en función de la energía de la partícula 4 tendremos una $\sigma$ (y una $s(\sigma)$). Sin embargo no todas los ángulos obtenidos para un rango de energías determinado se comportan de manera gaussiana, solo aquellas que se encuentran en la parte central, con ángulos grandes (imagen \ref{Fig:2.4-region_interes}).
 
-\begin{figure}[h!] \centering
-    \begin{tikzpicture}
-        \node[anchor=south west,inner sep=0] (image) at (0,0) { \includegraphics[scale=0.8]{5_measured_kin.eps}};
+\begin{figure}[h!] 
+    \begin{tikzpicture} 
+        \node[anchor=south west,inner sep=0] (image) at (0,0) { \includegraphics[scale=1]{5_measured_kin.eps}};
         
-         \node (1) at (-3,0) {};
-         \node (2) at (0,0) {$m_2$};
-            \node (3) at (3,1) {$m_3$};
-            \node (4) at (3,-1) {$m_4$};
+        \node (1) at (6.5,4.5) {};
+        \node (2) at (6.5,3.5) {};
+        \node (3) at (5.2,3.5) {};
+        \node (4) at (5.2,4.5) {};
+
+        \node (f0i) at (9.6,3.5) {};
+        \node (f0f) at (11.5,3.5) {};
+
+    \draw[ultra thick]  (5.8, 2.8)-- (4.4,2.8)  -- (4.4,3.8) -- (5.8,3.8) -- (5.8,2.8) ;
+    \
+    \draw[arrows={->},ultra thick] (f0i)--(f0f); 
+
+    \node[anchor=south west,inner sep=0] (image) at (11.3,-0.6) { \includegraphics[scale=1.3]{15_fit.eps}};
+        
+
     \end{tikzpicture}
+    \caption{región de interés, distancia 15 cm.}
+    \label{Fig:2.4-region_interes}
 \end{figure}
 
 
 Entonces es fundamental tener las máximas medidas posibles de angulos grandes, para así obtener una $\sigma$ con la incertidumbre lo mas pequeña posible. Para eso tenemos que hacer un estudio de la {\it eficiencia} del experimento, que es una relación calculada por ROOT a partir del número de partículas emitidas para un ángulo y el número de partículas {\it realmente} medidas. \\
 
-A fin de maximizar la eficiencia, hemos tratado de calcular varias de estas gráficas para diferentes distancias entre el pad y el detector. Lógicamente cuanto mas cerca estén mejor se van a obtener los datos, ya que no estamos teniendo en cuenta el efecto del campo eléctrico. En un estudio mas detallado deberíamos tenerlo en cuenta, interfiriendo el campo eléctrico del pad con el de los propios detectores de silicio/detectores de partículas ligeras. Por esa misma razón hemos estudiado distancias de hasta 17 cm e incluso 50 cm. Véase la imagen \ref{Fig:2.4-Efficiencia} para ver la eficiencia en función de la distancia. 
+
+\begin{figure}[h!] \centering
+    \includegraphics[scale=0.8]{sigma.eps}
+    \caption{valores de $\sigma$ en función de la distancia y para cada intervalo de energías.}
+    \label{Fig:2.4-sigma}
+\end{figure}
+
+
+A fin de maximizar la eficiencia, hemos tratado de calcular varias de estas gráficas para diferentes distancias entre el CTAR y el detector de silicio. Lógicamente cuanto mas cerca estén mejor se van a obtener los datos, ya que no estamos teniendo en cuenta el efecto del campo eléctrico. En un estudio mas detallado deberíamos tenerlo en cuenta, interfiriendo el campo eléctrico del pad con el de los propios detectores de silicio/detectores de partículas ligeras. Por esa misma razón hemos estudiado distancias de hasta 17 cm e incluso 50 cm. Véase la imagen \ref{Fig:2.4-Efficiencia} para ver la eficiencia en función de la distancia. 
 
 \begin{figure}[h!] \centering
     \includegraphics[scale=0.8]{Eff.eps}
@@ -303,30 +319,6 @@ Las asignatuas más relacionadas con estas prácticas son {\it Fisica nuclear y 
 Mi valoración tras la realización de estas prácticas es muy positiva, ya que he podido conocer como funciona por dentro un grupo de investigación experimental, pudiendo ver de primera mano cual es el poder de las herramientas informáticas y de simulación que existen hoy en día, para poder predecir el experimento e incluso mejorarlo sin necesidad de experimentar. Además de esto poder aprender un nuevo lenguaje de programación, tan útil en estos días como es C++, así como la herramienta ROOT para poder evaluar y rellenar histogramas, me parece fundamental para un físico. \\
 
 Más allá de los conocimientos adquiridos, que es el motivo principal por lo que solicité estas prácticas, y los cuales, he de decir, han superado mis expectativas, me quedo con la experiencia de realizar un proyecto muy divertido, interesante y el cual me ha enseñado que la física nuclear e incluso la física experimental es mucho mas de lo que se valora en el ámbito académico.
-
-\section*{Dudas}
-
-Las dudas que tengo son las siguientes:
-
-\begin{itemize}
-    \item Mencionar mejor cual es la distancia entre el pad y el detector, utilidad, razón de existir, estudio sobre ella. 
-    \item ¿Cuáles son las mejores ecuaciones que explicitar en el cálculo de la cinemática?
-    \item ¿Conveniente poner la imagen de la pérdida de energía?
-    \item ¿Imagen ampliando la región gaussiana? 
-    \item {\color{red} ¿Como era lo de la incertidumbre sigma relacionada con la incertidumbre global para el exprimento?} La razón por la que esto es importante es qeu está en el centro mismo del motivo de la creación de esta práctica. 
-    \item ¿Poner imagenes del fit de las gaussianas?
-    \item Las partículas no se paran del todo en silicio ¿No?
-    
-\end{itemize}
-
-
-Energías de excitación. De las variablrst4 theta4 puedes obtener la energía de exctación. Para los mismos angullos tendremos energías de excitación diferente. Dado que depende de T4 y theta4, dependemos de toda la incertidumbre de la energía y el angulo. La sigma tiene que ver con la u2 (theta) (contribución de esta parte a la incertiudmbre total) (entre otras cosas). \\
-
-Entre el pad y el detector hay una distancia (que tiene gas). ¿para que si idealmente sería conveniente hasta en la eficiencia? -> para evitar la interacción entre los 3000 voltios del pad y el silicio a 150V, cambiando lasdirecciones del campo eléctrico. \\
-
-Solo alguanas partículas se paran. Eso es un problema, ya que solo medimos la pérdida de energía.  \\
-
-reconstrucción, mecionar mejor lo de las partículas reales detectadas. 
 
 
 \end{document}

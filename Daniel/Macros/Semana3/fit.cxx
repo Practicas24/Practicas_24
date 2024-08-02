@@ -76,4 +76,6 @@ void fit()
     auto *c1{new TCanvas("c1", "sigma_projections")};
     mg->Draw("apl plc pmc");
     legend->Draw();
+    c1->SaveAs(TString::Format("/home/daniel/GitHub/Practicas_24/Daniel/Macros/Memoria/Figura/sigma.eps"));
+    
 }
